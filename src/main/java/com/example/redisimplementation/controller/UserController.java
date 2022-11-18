@@ -20,20 +20,13 @@ public class UserController {
     @GetMapping("/GET/{id}")
     public User getUserByID(@PathVariable String id) {
 
-        int idInt = Integer.parseInt(id);
-
-        User cachedUserRecord = userCache.get(id);
-
-        if (cachedUserRecord != null) {
-            System.out.println("User found in cache with id:" + idInt);
-            return cachedUserRecord;
-        } else {
-            System.out.println("User not found in cache with id: " + idInt);
+        if (id != null)
+            return userCache.get(id);
+        else
             return null;
-        }
     }
 
-    @PostMapping(value = "/SET", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/SET", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String setUser(@Valid @RequestBody UserTo userTo) {
         User created = UserUtil.createNewUserFromUserTo(userTo);
         userCache.add(String.valueOf(created.getId()), created);

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CacheStore<T> {
-    private Cache<String, T> cache;
+    private final Cache<String, T> cache;
 
     public CacheStore(int ttl, TimeUnit timeUnit) {
         cache = CacheBuilder.newBuilder()
@@ -24,9 +24,6 @@ public class CacheStore<T> {
     public void add(String key, T value) {
         if(key != null && value != null) {
             cache.put(key, value);
-            System.out.println("Record stored in "
-                    + value.getClass().getSimpleName()
-                    + " Cache with Key = " + key);
         }
     }
 
